@@ -1,0 +1,6 @@
+{
+  "name": "Sistem Tempahan Bilik Mesyuarat",
+  "description": "Sistem pengurusan dan tempahan bilik mesyuarat berpusat yang moden, pantas dan pintar untuk organisasi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
