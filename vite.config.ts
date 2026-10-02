@@ -4,12 +4,25 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
-  return {    
-    base: '/TEMPAHAN-BILIK-MEETING/',
+  // Determine base path:
+  // 1. Explicit VITE_BASE_PATH or BASE_URL env var if specified
+  // 2. When running in GitHub Actions or GITHUB_PAGES=true, use repository path
+  // 3. Otherwise default to '/' for local development and AI Studio environment
+  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+  const isGitHubPages = process.env.GITHUB_PAGES === 'true' || isGitHubActions;
+
+  const defaultGhRepo = process.env.GITHUB_REPOSITORY
+    ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/`
+    : '/TEMPAHAN-BILIK-MEETING/';
+
+  const base = process.env.VITE_BASE_PATH || (isGitHubPages ? defaultGhRepo : '/');
+
+  return {
+    base,
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': import.meta.dirname ?? path.resolve('.'),
       },
     },
     server: {
@@ -21,3 +34,4 @@ export default defineConfig(() => {
     },
   };
 });
+
